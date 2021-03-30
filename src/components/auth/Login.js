@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import AuthContext from '../../context/autenticacion/authContext';
 
-const Login = () => {
+const Login = (props) => {
 
     // State para iniciar sesión
     const [usuario, guardarUsuario] = useState({
@@ -10,6 +11,10 @@ const Login = () => {
     });
 
     const { email, password } = usuario;
+
+    const authContext = useContext(AuthContext);
+
+    const { autenticado, login } = authContext;
 
     const onChange = e => {
         guardarUsuario({
@@ -26,7 +31,16 @@ const Login = () => {
         if (email.trim() === '' || password.trim() === '') {
             console.log('Todos los campos son obligatorios', 'alerta-error');
         }
+
+        login(usuario);
     }
+
+    useEffect(() => {
+        if (autenticado) {
+            props.history.push('/Proyectos');
+        }
+    // eslint-disable-next-line
+    }, [autenticado, props.history])
 
     return (
         <div className="form-usuario">
