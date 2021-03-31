@@ -3,18 +3,21 @@ import Login from './components/auth/Login';
 import NuevaCuenta from './components/auth/NuevaCuenta';
 import Proyectos from './components/proyecto/Proyectos';
 import AuthState from './context/autenticacion/authState';
+import AlertaState from './context/alerta/alertaState';
 
 function App() {
   return (
-    <AuthState>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
-          <Route exact path="/proyectos" component={Proyectos} />
-        </Switch>
-      </Router>
-    </AuthState>
+    <AlertaState>
+      <AuthState>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
+            <Route exact path="/proyectos" component={Proyectos} />
+          </Switch>
+        </Router>
+      </AuthState>
+    </AlertaState>
   );
 }
 
