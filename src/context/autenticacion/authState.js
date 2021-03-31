@@ -3,7 +3,9 @@ import AuthReducer from "./authReducer";
 import {
     LOGIN_USUARIO,
     AUTENTICACION_USUARIO,
-    ERROR_LOGIN
+    ERROR_LOGIN,
+    REGISTRO_EXITOSO,
+    REGISTRO_ERROR
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -41,6 +43,27 @@ const AuthState = (props) => {
         }
     }
 
+    const registrarUsuario = async datos => {
+        try {
+            const respuesta = await clienteAxios.post('/api/usuarios', datos);
+            dispatch({
+                type: REGISTRO_EXITOSO,
+                payload: respuesta.data
+            });
+            getUsuarioAutenticado();
+        } catch (error) {
+            const alerta = {
+                msg: error.response.data.msg,
+                categoria: 'alerta-error'
+            }
+
+            dispatch({
+                type: REGISTRO_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
     const getUsuarioAutenticado = async (usuario) => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -73,7 +96,8 @@ const AuthState = (props) => {
             value={{
                 mensaje: state.mensaje,
                 autenticado: state.autenticado,
-                login
+                login,
+                registrarUsuario
 
             }}
         >
