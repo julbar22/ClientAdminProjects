@@ -28,7 +28,7 @@ const AuthState = (props) => {
                 type: LOGIN_USUARIO,
                 payload: response.data
             });
-            getUsuarioAutenticado(usuario);
+            getUsuarioAutenticado();
 
         } catch (error) {
             console.log(error);
@@ -64,7 +64,7 @@ const AuthState = (props) => {
         }
     }
 
-    const getUsuarioAutenticado = async (usuario) => {
+    const getUsuarioAutenticado = async () => {
         const token = localStorage.getItem("token");
         if (token) {
             tokenAuth(token);
@@ -96,8 +96,10 @@ const AuthState = (props) => {
             value={{
                 mensaje: state.mensaje,
                 autenticado: state.autenticado,
+                usuario: state.usuario,
                 login,
-                registrarUsuario
+                registrarUsuario,
+                getUsuarioAutenticado
 
             }}
         >
