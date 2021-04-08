@@ -4,7 +4,8 @@ import {
     CREAR_PROYECTO,
     MOSTRAR_FORMULARIO,
     OBTENER_PROYECTOS,
-    PROYECTO_ACTUAL
+    PROYECTO_ACTUAL,
+    PROYECTO_ERROR
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -46,6 +47,27 @@ const ProyectoState = (props) => {
         })
     }
 
+    const agregarProyecto = async proyecto => {
+
+        try {
+            const resultado = await clienteAxios.post('/api/proyectos', proyecto);
+            dispatch({
+                type: CREAR_PROYECTO,
+                payload: resultado.data
+            })
+        } catch (error) {
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
 
     return (
         <ProyectoContext.Provider
@@ -56,7 +78,8 @@ const ProyectoState = (props) => {
                 mensaje: state.mensaje,
                 getProyectos,
                 proyectoActual,
-                mostrarFormulario
+                mostrarFormulario,
+                agregarProyecto
             }}
         >
             {props.children}

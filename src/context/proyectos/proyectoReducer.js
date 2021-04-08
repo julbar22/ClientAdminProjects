@@ -1,7 +1,9 @@
 import {
     OBTENER_PROYECTOS,
     PROYECTO_ACTUAL,
-    MOSTRAR_FORMULARIO
+    MOSTRAR_FORMULARIO,
+    CREAR_PROYECTO,
+    PROYECTO_ERROR
 } from "../../types";
 
 const ProyectoReducer = (state, action) => {
@@ -20,6 +22,18 @@ const ProyectoReducer = (state, action) => {
             return {
                 ...state,
                 formulario: true
+            }
+        case CREAR_PROYECTO:
+            return {
+                ...state,
+                listaProyectos: [...state.listaProyectos, action.payload],
+                formulario: false,
+                errorformulario: false
+            }
+        case PROYECTO_ERROR:
+            return {
+                ...state,
+                mensaje: action.payload
             }
         default:
             return state;

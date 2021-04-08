@@ -4,7 +4,7 @@ import proyectoContext from '../../context/proyectos/proyectoContext';
 const NuevoProyecto = () => {
 
     const proyectosContext = useContext(proyectoContext);
-    const { formulario, mostrarFormulario } = proyectosContext;
+    const { formulario, mostrarFormulario, agregarProyecto } = proyectosContext;
     // State para Proyecto
     const [proyecto, guardarProyecto] = useState({
         nombre: ''
@@ -33,6 +33,8 @@ const NuevoProyecto = () => {
 
         // agregar proyecto a la bd
         alert("Se guardo el proyecto")
+
+        agregarProyecto(proyecto)
 
         guardarProyecto({
             nombre: ''

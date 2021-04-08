@@ -9,6 +9,7 @@ const Proyectos = () => {
             <div className="seccion-principal">
                 <Barra />
                 <h2>Selecciona un proyecto</h2>
+                
             </div>
         </div>
     );
