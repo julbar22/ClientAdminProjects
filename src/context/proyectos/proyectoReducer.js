@@ -3,7 +3,8 @@ import {
     PROYECTO_ACTUAL,
     MOSTRAR_FORMULARIO,
     CREAR_PROYECTO,
-    PROYECTO_ERROR
+    PROYECTO_ERROR,
+    VALIDAR_FORMULARIO
 } from "../../types";
 
 const ProyectoReducer = (state, action) => {
@@ -34,6 +35,11 @@ const ProyectoReducer = (state, action) => {
             return {
                 ...state,
                 mensaje: action.payload
+            }
+        case VALIDAR_FORMULARIO:
+            return {
+                ...state,
+                errorformulario: true
             }
         default:
             return state;

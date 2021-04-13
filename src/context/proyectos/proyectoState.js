@@ -5,7 +5,8 @@ import {
     MOSTRAR_FORMULARIO,
     OBTENER_PROYECTOS,
     PROYECTO_ACTUAL,
-    PROYECTO_ERROR
+    PROYECTO_ERROR,
+    VALIDAR_FORMULARIO
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -15,7 +16,8 @@ const ProyectoState = (props) => {
         listaProyectos: [],
         proyecto: null,
         formulario: false,
-        mensaje: null
+        mensaje: null,
+        errorformulario:false
 
     };
 
@@ -68,6 +70,12 @@ const ProyectoState = (props) => {
         }
     }
 
+    const mostrarError = () => {
+        dispatch({
+            type: VALIDAR_FORMULARIO
+        })
+    } 
+
 
     return (
         <ProyectoContext.Provider
@@ -76,10 +84,12 @@ const ProyectoState = (props) => {
                 proyecto: state.proyecto,
                 formulario: state.formulario,
                 mensaje: state.mensaje,
+                errorformulario:state.errorformulario,
                 getProyectos,
                 proyectoActual,
                 mostrarFormulario,
-                agregarProyecto
+                agregarProyecto,
+                mostrarError
             }}
         >
             {props.children}

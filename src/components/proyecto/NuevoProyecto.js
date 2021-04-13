@@ -1,10 +1,10 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext} from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 
 const NuevoProyecto = () => {
 
     const proyectosContext = useContext(proyectoContext);
-    const { formulario, mostrarFormulario, agregarProyecto } = proyectosContext;
+    const { formulario, errorformulario, mostrarFormulario, agregarProyecto, mostrarError } = proyectosContext;
     // State para Proyecto
     const [proyecto, guardarProyecto] = useState({
         nombre: ''
@@ -27,13 +27,9 @@ const NuevoProyecto = () => {
 
         // Validar el proyecto
         if (nombre === '') {
-            console.log('error')
+            mostrarError();
             return;
         }
-
-        // agregar proyecto a la bd
-        alert("Se guardo el proyecto")
-
         agregarProyecto(proyecto)
 
         guardarProyecto({
@@ -74,6 +70,7 @@ const NuevoProyecto = () => {
 
                 </form> : null
             }
+            { errorformulario ? <p className="mensaje error">El nombre del Proyecto es obligatorio</p>  : null }
         </Fragment>
     );
 }
