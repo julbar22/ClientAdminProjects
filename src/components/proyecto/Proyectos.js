@@ -1,6 +1,8 @@
 import React, {useEffect, useContext} from 'react';
 import Sidebar from '../layout/Sidebar';
 import Barra from '../layout/Barra';
+import FormTarea from '../tareas/FormTarea';
+import ListadoTareas from '../tareas/ListadoTareas';
 
 const Proyectos = () => {
     return (
@@ -8,7 +10,12 @@ const Proyectos = () => {
             <Sidebar />
             <div className="seccion-principal">
                 <Barra />
-                <h2>Selecciona un proyecto</h2>
+                <main>
+                    <FormTarea />
+                    <div className="contenedor-tareas">
+                        <ListadoTareas />
+                    </div>
+                </main>
                 
             </div>
         </div>

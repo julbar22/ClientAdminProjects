@@ -4,28 +4,31 @@ import NuevaCuenta from './components/auth/NuevaCuenta';
 import Proyectos from './components/proyecto/Proyectos';
 import AuthState from './context/autenticacion/authState';
 import AlertaState from './context/alerta/alertaState';
-import ProyectoState from './context/proyectos/proyectoState'
+import ProyectoState from './context/proyectos/proyectoState';
+import TareaState from './context/tareas/tareaState';
 import tokenAuth from './config/token';
 
 const token = localStorage.getItem('token');
-if(token) {
+if (token) {
   tokenAuth(token);
 }
 function App() {
   return (
-    <ProyectoState>
-      <AlertaState>
-        <AuthState>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
-              <Route exact path="/proyectos" component={Proyectos} />
-            </Switch>
-          </Router>
-        </AuthState>
-      </AlertaState>
-    </ProyectoState>
+    <TareaState>
+      <ProyectoState>
+        <AlertaState>
+          <AuthState>
+            <Router>
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
+                <Route exact path="/proyectos" component={Proyectos} />
+              </Switch>
+            </Router>
+          </AuthState>
+        </AlertaState>
+      </ProyectoState>
+    </TareaState>
   );
 }
 
