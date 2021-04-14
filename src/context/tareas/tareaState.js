@@ -4,7 +4,8 @@ import TareaReducer from './tareaReducer';
 
 import { 
     AGREGAR_TAREA,
-    VALIDAR_TAREA
+    VALIDAR_TAREA,
+    TAREAS_PROYECTO
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -38,13 +39,27 @@ const TareaState = props => {
         })
     }
 
+    const obtenerTareas = async proyecto => {
+        try {
+            const resultado = await clienteAxios.get('/api/tareas', { params: { proyecto }});
+            console.log(resultado);
+            dispatch({
+                type: TAREAS_PROYECTO,
+                payload: resultado.data.tareas
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <TareaContext.Provider
             value={{
                 tareasproyecto : state.tareasproyecto,
                 errortarea: state.errortarea,
                 agregarTarea,
-                validarTarea
+                validarTarea,
+                obtenerTareas
             }}
         >
             {props.children}
