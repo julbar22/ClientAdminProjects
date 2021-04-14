@@ -5,7 +5,8 @@ import {
     CREAR_PROYECTO,
     PROYECTO_ERROR,
     VALIDAR_FORMULARIO,
-    ELIMINAR_PROYECTO
+    ELIMINAR_PROYECTO,
+    LIMPIAR_PROYECTO
 } from "../../types";
 
 const ProyectoReducer = (state, action) => {
@@ -47,6 +48,15 @@ const ProyectoReducer = (state, action) => {
                 ...state,
                 listaProyectos: state.listaProyectos.filter(proyecto => proyecto._id !== action.payload),
                 proyecto: null
+            }
+        case LIMPIAR_PROYECTO:
+            return {
+                ...state,
+                listaProyectos: [],
+                proyecto: null,
+                formulario: false,
+                mensaje: null,
+                errorformulario: false
             }
         default:
             return state;

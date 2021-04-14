@@ -5,7 +5,8 @@ import {
     AUTENTICACION_USUARIO,
     ERROR_LOGIN,
     REGISTRO_EXITOSO,
-    REGISTRO_ERROR
+    REGISTRO_ERROR,
+    CERRAR_SESION
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -91,6 +92,12 @@ const AuthState = (props) => {
 
     }
 
+    const cerrarSesion = () => {
+        dispatch({
+            type: CERRAR_SESION
+        })
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -99,7 +106,8 @@ const AuthState = (props) => {
                 usuario: state.usuario,
                 login,
                 registrarUsuario,
-                getUsuarioAutenticado
+                getUsuarioAutenticado,
+                cerrarSesion
 
             }}
         >

@@ -7,7 +7,8 @@ import {
     PROYECTO_ACTUAL,
     PROYECTO_ERROR,
     VALIDAR_FORMULARIO,
-    ELIMINAR_PROYECTO
+    ELIMINAR_PROYECTO,
+    LIMPIAR_PROYECTO
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -18,13 +19,13 @@ const ProyectoState = (props) => {
         proyecto: null,
         formulario: false,
         mensaje: null,
-        errorformulario:false
+        errorformulario: false
 
     };
 
     const [state, dispatch] = useReducer(ProyectoReducer, initialState);
 
-    const getProyectos = async() => {
+    const getProyectos = async () => {
         try {
             const response = await clienteAxios.get('/api/proyectos');
             dispatch({
@@ -37,7 +38,7 @@ const ProyectoState = (props) => {
 
     }
 
-    const proyectoActual=(proyectoId)=>{
+    const proyectoActual = (proyectoId) => {
         dispatch({
             type: PROYECTO_ACTUAL,
             payload: proyectoId
@@ -63,7 +64,7 @@ const ProyectoState = (props) => {
                 msg: 'Hubo un error',
                 categoria: 'alerta-error'
             }
-            
+
             dispatch({
                 type: PROYECTO_ERROR,
                 payload: alerta
@@ -75,7 +76,7 @@ const ProyectoState = (props) => {
         dispatch({
             type: VALIDAR_FORMULARIO
         })
-    } 
+    }
 
     const eliminarProyecto = async proyectoId => {
         try {
@@ -89,12 +90,18 @@ const ProyectoState = (props) => {
                 msg: 'Hubo un error',
                 categoria: 'alerta-error'
             }
-            
+
             dispatch({
                 type: PROYECTO_ERROR,
                 payload: alerta
             })
         }
+    }
+
+    const limpiarProyecto = () => {
+        dispatch({
+            type: LIMPIAR_PROYECTO
+        })
     }
 
 
@@ -105,13 +112,14 @@ const ProyectoState = (props) => {
                 proyecto: state.proyecto,
                 formulario: state.formulario,
                 mensaje: state.mensaje,
-                errorformulario:state.errorformulario,
+                errorformulario: state.errorformulario,
                 getProyectos,
                 proyectoActual,
                 mostrarFormulario,
                 agregarProyecto,
                 mostrarError,
-                eliminarProyecto
+                eliminarProyecto,
+                limpiarProyecto
             }}
         >
             {props.children}

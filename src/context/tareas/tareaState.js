@@ -9,7 +9,8 @@ import {
     ACTUALIZAR_TAREA,
     TAREA_ACTUAL,
     LIMPIAR_TAREA,
-    ELIMINAR_TAREA
+    ELIMINAR_TAREA,
+    LIMPIAR_TAREAS
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -96,6 +97,12 @@ const TareaState = props => {
         }
     }
 
+    const limpiarTareas = () => {
+        dispatch({
+            type: LIMPIAR_TAREAS
+        })
+    }
+
     return (
         <TareaContext.Provider
             value={{
@@ -108,7 +115,8 @@ const TareaState = props => {
                 actualizarTarea,
                 guardarTareaActual,
                 limpiarTarea,
-                eliminarTarea
+                eliminarTarea,
+                limpiarTareas
             }}
         >
             {props.children}

@@ -44,7 +44,7 @@ const FormTarea = () => {
         })
     }
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
 
         // validar
@@ -55,9 +55,9 @@ const FormTarea = () => {
         // Si es edición o si es nueva tarea
         if (tareaseleccionada === null) {
             tarea.proyecto = proyectoActual._id;
-            agregarTarea(tarea);
+            await agregarTarea(tarea);
         } else {
-            actualizarTarea(tarea);
+            await actualizarTarea(tarea);
             limpiarTarea();
         }
         obtenerTareas(proyectoActual._id);
