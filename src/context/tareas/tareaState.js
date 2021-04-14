@@ -2,10 +2,13 @@ import React, { useReducer } from 'react';
 import TareaContext from './tareaContext';
 import TareaReducer from './tareaReducer';
 
-import { 
+import {
     AGREGAR_TAREA,
     VALIDAR_TAREA,
-    TAREAS_PROYECTO
+    TAREAS_PROYECTO,
+    ACTUALIZAR_TAREA,
+    TAREA_ACTUAL,
+    LIMPIAR_TAREA
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -14,6 +17,7 @@ const TareaState = props => {
     const initialState = {
         tareasproyecto: [],
         errortarea: false,
+        tareaseleccionada: null
     }
 
     // Crear dispatch y state
@@ -41,7 +45,7 @@ const TareaState = props => {
 
     const obtenerTareas = async proyecto => {
         try {
-            const resultado = await clienteAxios.get('/api/tareas', { params: { proyecto }});
+            const resultado = await clienteAxios.get('/api/tareas', { params: { proyecto } });
             console.log(resultado);
             dispatch({
                 type: TAREAS_PROYECTO,
@@ -52,14 +56,45 @@ const TareaState = props => {
         }
     }
 
+    const actualizarTarea = async tarea => {
+
+        try {
+            const resultado = await clienteAxios.put(`/api/tareas/${tarea._id}`, tarea);
+
+            dispatch({
+                type: ACTUALIZAR_TAREA,
+                payload: resultado.data.tarea
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const guardarTareaActual = tarea => {
+        dispatch({
+            type: TAREA_ACTUAL,
+            payload: tarea
+        })
+    }
+
+    const limpiarTarea = () => {
+        dispatch({
+            type: LIMPIAR_TAREA
+        })
+    }
+
     return (
         <TareaContext.Provider
             value={{
-                tareasproyecto : state.tareasproyecto,
+                tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,
+                tareaseleccionada: state.tareaseleccionada,
                 agregarTarea,
                 validarTarea,
-                obtenerTareas
+                obtenerTareas,
+                actualizarTarea,
+                guardarTareaActual,
+                limpiarTarea
             }}
         >
             {props.children}

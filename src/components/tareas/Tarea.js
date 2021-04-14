@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import tareaContext from '../../context/tareas/tareaContext';
 
 const Tarea = ({ tarea }) => {
+
+    // obtener la función del context de tarea
+    const tareasContext = useContext(tareaContext);
+    const { actualizarTarea, guardarTareaActual } = tareasContext;
+
+    const cambiarEstado = tarea => {
+        if (tarea.estado) {
+            tarea.estado = false;
+        } else {
+            tarea.estado = true
+        }
+        actualizarTarea(tarea);
+    }
+
+    const seleccionarTarea = tarea => {
+        guardarTareaActual(tarea);
+    }
 
     return (
         <li className="tarea sombra">
@@ -13,6 +31,7 @@ const Tarea = ({ tarea }) => {
                         <button
                             type="button"
                             className="completo"
+                            onClick={() => cambiarEstado(tarea)}
                         >Completo</button>
                     )
                     :
@@ -20,6 +39,7 @@ const Tarea = ({ tarea }) => {
                         <button
                             type="button"
                             className="incompleto"
+                            onClick={() => cambiarEstado(tarea)}
                         >Incompleto</button>
                     )
                 }
@@ -29,6 +49,7 @@ const Tarea = ({ tarea }) => {
                 <button
                     type="button"
                     className="btn btn-primario"
+                    onClick={() => seleccionarTarea(tarea)}
                 >Editar</button>
 
                 <button

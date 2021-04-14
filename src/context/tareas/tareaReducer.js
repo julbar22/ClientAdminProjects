@@ -1,7 +1,10 @@
 import {
     AGREGAR_TAREA,
     VALIDAR_TAREA,
-    TAREAS_PROYECTO
+    TAREAS_PROYECTO,
+    ACTUALIZAR_TAREA,
+    TAREA_ACTUAL,
+    LIMPIAR_TAREA
 } from '../../types';
 
 export default (state, action) => {
@@ -21,6 +24,21 @@ export default (state, action) => {
             return {
                 ...state,
                 tareasproyecto: action.payload
+            }
+        case ACTUALIZAR_TAREA:
+            return {
+                ...state,
+                tareasproyecto: state.tareasproyecto.map(tarea => tarea._id === action.payload._id ? action.payload : tarea)
+            }
+        case TAREA_ACTUAL:
+            return {
+                ...state,
+                tareaseleccionada: action.payload
+            }
+        case LIMPIAR_TAREA:
+            return {
+                ...state,
+                tareaseleccionada: null
             }
         default:
             return state;
