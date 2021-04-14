@@ -4,7 +4,8 @@ import {
     TAREAS_PROYECTO,
     ACTUALIZAR_TAREA,
     TAREA_ACTUAL,
-    LIMPIAR_TAREA
+    LIMPIAR_TAREA,
+    ELIMINAR_TAREA
 } from '../../types';
 
 export default (state, action) => {
@@ -39,6 +40,11 @@ export default (state, action) => {
             return {
                 ...state,
                 tareaseleccionada: null
+            }
+        case ELIMINAR_TAREA:
+            return {
+                ...state,
+                tareasproyecto: state.tareasproyecto.filter(tarea => tarea._id !== action.payload)
             }
         default:
             return state;

@@ -1,11 +1,17 @@
 import React, { useContext } from 'react';
 import tareaContext from '../../context/tareas/tareaContext';
+import proyectoContext from '../../context/proyectos/proyectoContext';
 
 const Tarea = ({ tarea }) => {
 
     // obtener la función del context de tarea
     const tareasContext = useContext(tareaContext);
-    const { actualizarTarea, guardarTareaActual } = tareasContext;
+    const { actualizarTarea, guardarTareaActual, eliminarTarea } = tareasContext;
+
+    const proyectosContext = useContext(proyectoContext);
+    const { proyecto } = proyectosContext;
+
+    const [proyectoActual] = proyecto;
 
     const cambiarEstado = tarea => {
         if (tarea.estado) {
@@ -18,6 +24,11 @@ const Tarea = ({ tarea }) => {
 
     const seleccionarTarea = tarea => {
         guardarTareaActual(tarea);
+    }
+
+    const tareaEliminar = tarea => {
+        console.log(tarea);
+        eliminarTarea(tarea._id, proyectoActual._id);
     }
 
     return (
@@ -55,6 +66,7 @@ const Tarea = ({ tarea }) => {
                 <button
                     type="button"
                     className="btn btn-secundario"
+                    onClick={() => tareaEliminar(tarea)}
                 >Eliminar</button>
             </div>
         </li>

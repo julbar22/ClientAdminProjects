@@ -8,7 +8,8 @@ import {
     TAREAS_PROYECTO,
     ACTUALIZAR_TAREA,
     TAREA_ACTUAL,
-    LIMPIAR_TAREA
+    LIMPIAR_TAREA,
+    ELIMINAR_TAREA
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -83,6 +84,18 @@ const TareaState = props => {
         })
     }
 
+    const eliminarTarea = async (id, proyecto) => {
+        try {
+            await clienteAxios.delete(`/api/tareas/${id}`, { params: { proyecto }});
+            dispatch({
+                type: ELIMINAR_TAREA,
+                payload: id
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <TareaContext.Provider
             value={{
@@ -94,7 +107,8 @@ const TareaState = props => {
                 obtenerTareas,
                 actualizarTarea,
                 guardarTareaActual,
-                limpiarTarea
+                limpiarTarea,
+                eliminarTarea
             }}
         >
             {props.children}
