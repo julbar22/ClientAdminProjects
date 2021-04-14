@@ -6,7 +6,8 @@ import {
     OBTENER_PROYECTOS,
     PROYECTO_ACTUAL,
     PROYECTO_ERROR,
-    VALIDAR_FORMULARIO
+    VALIDAR_FORMULARIO,
+    ELIMINAR_PROYECTO
 } from "../../types";
 import React, { useReducer } from "react";
 import clienteAxios from "../../config/axios";
@@ -76,6 +77,26 @@ const ProyectoState = (props) => {
         })
     } 
 
+    const eliminarProyecto = async proyectoId => {
+        try {
+            await clienteAxios.delete(`/api/proyectos/${proyectoId}`);
+            dispatch({
+                type: ELIMINAR_PROYECTO,
+                payload: proyectoId
+            })
+        } catch (error) {
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
 
     return (
         <ProyectoContext.Provider
@@ -89,7 +110,8 @@ const ProyectoState = (props) => {
                 proyectoActual,
                 mostrarFormulario,
                 agregarProyecto,
-                mostrarError
+                mostrarError,
+                eliminarProyecto
             }}
         >
             {props.children}

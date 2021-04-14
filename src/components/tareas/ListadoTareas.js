@@ -6,13 +6,17 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ListadoTareas = () => {
     const proyectosContext = useContext(proyectoContext);
-    const { proyecto } = proyectosContext;
+    const { proyecto, eliminarProyecto} = proyectosContext;
 
     const tareasContext = useContext(tareaContext);
     const { tareasproyecto } = tareasContext;
 
     if (!proyecto) return <h2>Selecciona un proyecto</h2>;
     const [proyectoActual] = proyecto;
+
+    const onClickEliminar = () => {
+        eliminarProyecto(proyectoActual._id)
+    }
 
     return (
         <Fragment>
@@ -37,6 +41,11 @@ const ListadoTareas = () => {
                     </TransitionGroup>
                 }
             </ul>
+            <button
+                type="button"
+                className="btn btn-eliminar"
+                onClick={onClickEliminar}
+            >Eliminar Proyecto &times;</button>
         </Fragment>
 
     );

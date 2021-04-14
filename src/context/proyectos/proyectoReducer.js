@@ -4,7 +4,8 @@ import {
     MOSTRAR_FORMULARIO,
     CREAR_PROYECTO,
     PROYECTO_ERROR,
-    VALIDAR_FORMULARIO
+    VALIDAR_FORMULARIO,
+    ELIMINAR_PROYECTO
 } from "../../types";
 
 const ProyectoReducer = (state, action) => {
@@ -40,6 +41,12 @@ const ProyectoReducer = (state, action) => {
             return {
                 ...state,
                 errorformulario: true
+            }
+        case ELIMINAR_PROYECTO:
+            return {
+                ...state,
+                listaProyectos: state.listaProyectos.filter(proyecto => proyecto._id !== action.payload),
+                proyecto: null
             }
         default:
             return state;
